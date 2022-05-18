@@ -2,6 +2,30 @@
 $is_auth = rand(0, 1);
 $user_name = 'user'; // укажите здесь ваше имя
 
+require_once('functions.php');
+
+//$connection = new mysqli('127.0.0.1','root','','yeticaveartyom');
+$connection = mysqli_connect('127.0.0.1', 'root', '', 'yeticaveartyom');
+mysqli_set_charset($connection, utf8);
+
+if (!$connection) {
+    $error = mysqli_connect_error();
+    $content = include_template('error.php', ['error' => $error]);
+} else {
+    $sql = 'SELECT `name`, `name_eng` FROM category';
+    $result = mysqli_query($connection, $sql);
+
+    if ($result) {
+        $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connection);
+        $content = include_template('error.php', ['error' => $error]);
+    }
+}
+
+//print include_template('index.php', ['content' => $content, 'categories' => $categories]);
+
+/*
 $categories = [
     [
         'eng' => 'boards',
@@ -28,6 +52,8 @@ $categories = [
         'rus' => 'Разное',
     ],
 ];
+*/
+
 $lots = [
     [
         'name' => '2014 Rossignol District Snowboard',
@@ -67,7 +93,7 @@ $lots = [
     ],
 ];
 
-require_once('functions.php');
+
 
 $main = include_template(
     'index.php',

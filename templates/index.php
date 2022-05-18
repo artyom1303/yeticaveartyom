@@ -7,8 +7,8 @@
         foreach ($categories as $category)
         {
             ?>
-            <li class="promo__item promo__item--<?=$category['eng']?>">
-                <a class="promo__link" href="pages/all-lots.html"><?=$category['rus']?></a>
+            <li class="promo__item promo__item--<?=$category['name_eng']?>">
+                <a class="promo__link" href="pages/all-lots.html"><?=$category['name']?></a>
             </li>
             <?php
         }
