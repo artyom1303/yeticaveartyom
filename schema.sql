@@ -19,7 +19,7 @@ CREATE TABLE lot (
   bet_step int(11) NOT NULL,
 
   author_id int(11) NOT NULL,
-  winner_id int(11) NOT NULL,
+  winner_id int(11) NULL,
   category_id int(11) NOT NULL
 );
 
