@@ -12,11 +12,24 @@ if (!$connection) {
     $error = mysqli_connect_error();
     $content = include_template('error.php', ['error' => $error]);
 } else {
-    $sql = 'SELECT `name`, `name_eng` FROM category';
+    $sql = 'SELECT `name` as rus, `name_eng` as eng FROM category';
     $result = mysqli_query($connection, $sql);
 
     if ($result) {
         $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connection);
+        $content = include_template('error.php', ['error' => $error]);
+    }
+
+
+
+
+    $sql = 'SELECT lot.name as name, category.name as category, image as url, starting_price as price FROM lot inner join category on lot.category_id = category.id';
+    $result = mysqli_query($connection, $sql);
+
+    if ($result) {
+        $lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
     } else {
         $error = mysqli_error($connection);
         $content = include_template('error.php', ['error' => $error]);
@@ -52,7 +65,7 @@ $categories = [
         'rus' => 'Разное',
     ],
 ];
-*/
+
 
 $lots = [
     [
@@ -92,7 +105,7 @@ $lots = [
         'url' => 'img/lot-6.jpg'
     ],
 ];
-
+*/
 
 
 $main = include_template(
