@@ -6,7 +6,7 @@ if (!$connection) {
     $error = mysqli_connect_error();
     $content = include_template('error.php', ['error' => $error]);
 } else {
-    $sql = 'SELECT `name` as rus, `name_eng` as eng FROM category';
+    $sql = 'SELECT id, name as rus, name_eng as eng FROM category';
     $result = mysqli_query($connection, $sql);
 
     if ($result) {

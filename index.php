@@ -9,7 +9,7 @@ $main = include_template(
     'index.php',
     [
     'categories' => $categories,
-    'lots' => $lots,
+    'lots' => $lots
     ]
 );
 
