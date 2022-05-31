@@ -2,6 +2,18 @@
 //phpinfo();
 /*
 */
+$form_valid = true;
+
+$errors = array(
+    "lot_name_ok" => true,
+    "category_ok" => true,
+    "message_ok" => true,
+    "lot_img_ok" => true,
+    "lot_rate_ok" => true,
+    "lot_step_ok" => true,
+    "lot_date_ok" => true
+);
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $file = $_FILES['lot-img']['name'];
     $path = $_FILES['lot-img']['tmp_name'];
@@ -33,7 +45,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     echo '<br>form_valid: '.($form_valid?'true':'false');
 */
+    $fields_data = array(
+        "lot_name" => $_POST['lot-name'],
+        "category" => $_POST['category'],
+        "message" => $_POST['message'],
+        "lot_img" => $_FILES['lot-img'],
+        "lot_rate" => $_POST['lot-rate'],
+        "lot_step" => $_POST['lot-step'],
+        "lot_date" => $_POST['lot-date']
+    );
+
+    $errors = array(
+        "lot_name_ok" => $lot_name_ok,
+        "category_ok" => $category_ok,
+        "message_ok" => $message_ok,
+        "lot_img_ok" => $lot_img_ok,
+        "lot_rate_ok" => $lot_rate_ok,
+        "lot_step_ok" => $lot_step_ok,
+        "lot_date_ok" => $lot_date_ok
+    );
+
     if($form_valid){
+
         $connect = new mysqli("localhost","root","","yeticaveartyom");
 
         $query = "
@@ -63,10 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     }
 
-    else{
-
-    }
-
 }
 
 
@@ -79,6 +108,9 @@ require_once('data.php');
 $main = include_template(
     'add.php',
     [
+        'fields_data' => $fields_data,
+        'form_valid' => $form_valid,
+        'errors' => $errors,
         'categories' => $categories,
         'lots' => $lots
     ]
