@@ -1,62 +1,60 @@
 <?php
+session_start();
+
+if (isset($_SESSION["id"])){
+    $is_auth = 1;
+    $user_name = $_SESSION["name"];
+    $avatar = $_SESSION['avatar'];
+}else{
+    $is_auth = 0;
+}
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $email_ok = !""==$_POST['email'];
-    $password_ok = !""==$_POST['password'];
+    $email_valid = !""==$_POST['email'];
+    $password_valid = !""==$_POST['password'];
 
-    $form_valid = ($email_ok and $password_ok);
+    $form_valid = ($email_valid and $password_valid);
 
     $fields_data = array(
         "email" => $_POST['email'],
         "password" => $_POST['password'],
     );
 
+    $password_wrong = false;
+    $email_wrong = false;
+
     if($form_valid){
-
-        $wrong_password = false;
-
         $connect = new mysqli("localhost","root","","yeticaveartyom");
-
         $query = "
-        SELECT password FROM user_ WHERE email = '".$_POST['email']."'
+        SELECT id, name, password, avatar FROM user_ WHERE email = '".$_POST['email']."'
         ";
-
-
-        //header("location:lot.php?lot_id=$added_lot_id");
-
-
-
-
         $result = $connect->query($query);
         if(!$result){
             die($connect->error." $query");
         }
         else{
             if(mysqli_num_rows($result)==0){
-                echo "пользователя с таким почтовым адресом не существует";
+                $email_wrong = true;
             }
             else{
-                echo "пользователь с таким почтовым адресом существует";
-                echo "<br>";
+                //echo "пользователь с таким почтовым адресом существует"; echo "<br>";
                 $user = $result->fetch_array();
                 if($user['password']==$_POST['password']){
-                    echo "правильный пароль";
+                    //echo "правильный пароль";
+                    $_SESSION["id"]=$user['id'];
+                    $_SESSION["name"]=$user['name'];
+                    $_SESSION["avatar"]=$user['avatar'];
 
+                    header("location:index.php");
                 }else{
-                    echo "неправильный пароль";
-                    $wrong_password = true;
+                    $password_wrong = true;
                 }
             }
         }
-
     }
-
 }
 
-
-$is_auth = rand(0, 1);
-$user_name = 'user'; // укажите здесь ваше имя
 
 require_once('functions.php');
 require_once('data.php');
@@ -64,10 +62,11 @@ require_once('data.php');
 $main = include_template(
     'login.php',
     [
-        'wrong_password' => $wrong_password,
+        'email_wrong' => $email_wrong,
+        'password_wrong' => $password_wrong,
         'fields_data' => $fields_data,
-        'email_ok' => $email_ok,
-        'password_ok' => $password_ok,
+        'email_valid' => $email_valid,
+        'password_valid' => $password_valid,
         'categories' => $categories
     ]
 );
@@ -79,7 +78,8 @@ $layout_content = include_template(
         'main' => $main,
         'categories' => $categories,
         'is_auth' => $is_auth,
-        'user_name' => $user_name
+        'user_name' => $user_name,
+        'avatar' => $avatar
     ]
 );
 

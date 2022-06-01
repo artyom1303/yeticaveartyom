@@ -1,4 +1,14 @@
 <?php
+session_start();
+
+if (isset($_SESSION["id"])){
+    $is_auth = 1;
+    $user_name = $_SESSION["name"];
+    $avatar = $_SESSION['avatar'];
+}else{
+    $is_auth = 0;
+}
+
 require_once('functions.php');
 require_once('data.php');
 
@@ -19,6 +29,7 @@ if(isset($_GET["lot_id"])){
         $main = include_template(
             'lot.php',
             [
+                'is_auth' => $is_auth,
                 'categories' => $categories,
                 'lots' => $lots,
                 'currentLot' => $currentLot,
@@ -32,6 +43,7 @@ if(isset($_GET["lot_id"])){
             'categories' => $categories,
             'is_auth' => $is_auth,
             'user_name' => $user_name,
+            'avatar' => $avatar
         ]);
 
         print($layout_content);
