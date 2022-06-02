@@ -7,6 +7,8 @@ if (isset($_SESSION["id"])){
     $avatar = $_SESSION['avatar'];
 }else{
     $is_auth = 0;
+    $user_name = true;
+    $avatar = true;
 }
 
 

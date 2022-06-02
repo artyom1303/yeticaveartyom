@@ -7,6 +7,8 @@ if (isset($_SESSION["id"])){
     $avatar = $_SESSION['avatar'];
 }else{
     $is_auth = 0;
+    $user_name = true;
+    $avatar = true;
 }
 
 if ($is_auth == 1){
@@ -26,7 +28,22 @@ if ($is_auth == 1){
         "lot_date_ok" => true
     );
 
+    $fields_data = array(
+        "lot_name" => '',
+        "category" => '',
+        "message" => '',
+        "lot_img" => '',
+        "lot_rate" => '',
+        "lot_step" => '',
+        "lot_date" => ''
+    );
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+        if(!isset($_POST['category'])){
+            $_POST['category'] = '';
+        }
+
         $file = $_FILES['lot-img']['name'];
         $path = $_FILES['lot-img']['tmp_name'];
         move_uploaded_file($path,'img/'.$file);

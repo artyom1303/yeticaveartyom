@@ -7,8 +7,18 @@ if (isset($_SESSION["id"])){
     $avatar = $_SESSION['avatar'];
 }else{
     $is_auth = 0;
+    $user_name = true;
+    $avatar = true;
 }
 
+$password_wrong = false;
+$email_wrong = false;
+$email_valid = false;
+$password_valid = false;
+$fields_data = array(
+    "email" => '',
+    "password" => ''
+);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $email_valid = !""==$_POST['email'];
@@ -21,8 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         "password" => $_POST['password'],
     );
 
-    $password_wrong = false;
-    $email_wrong = false;
+
 
     if($form_valid){
         $connect = new mysqli("localhost","root","","yeticaveartyom");

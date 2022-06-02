@@ -1,6 +1,6 @@
 <?php
 $connection = mysqli_connect('127.0.0.1', 'root', '', 'yeticaveartyom');
-mysqli_set_charset($connection, utf8);
+mysqli_set_charset($connection, 'utf8');
 
 if (!$connection) {
     $error = mysqli_connect_error();
