@@ -1,4 +1,4 @@
-<main>
+
     <nav class="nav">
         <ul class="nav__list container">
             <?php
@@ -27,4 +27,4 @@
       </div>
       <button type="submit" class="button">Войти</button>
     </form>
-</main>
+
