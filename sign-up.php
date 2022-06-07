@@ -38,9 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(   ""==$_FILES['avatar']['name']   ){   $errors['avatar']='Загрузите аватар'; $all_inputed = false;   }
 
     if ($all_inputed){
-        echo 'all_inputed';
 
         $connect = new mysqli("localhost","root","","yeticaveartyom");
+
+        /* проверка email */if(true){
 
         $query = "
 SELECT email FROM user_
@@ -60,21 +61,39 @@ WHERE email='".$_POST['email']."'
                 }
             }
         }
+        }
+
+        /* проверка avatar */if(true){
+            $f = mime_content_type($_FILES['avatar']['tmp_name']);
+            if (!($f == 'image/png' or $f == 'image/jpeg')) {
+                $errors['avatar'] = 'Допустимые форматы файлов: jpg, jpeg, png';
+                $no_errors = false;
+            }
+        }
 
 
+        if($no_errors){
 
+            $file = $_FILES['avatar']['name'];
+            $path = $_FILES['avatar']['tmp_name'];
+            move_uploaded_file($path,'avatars/'.$file);
 
+            $date = date('Y-m-d H:i:s');
+            $query = "
+INSERT INTO user_ VALUES (
+                    null,
+                    '".$date."',
+                    '".$_POST['email']."',
+                    '".$_POST['name']."',
+                    '".password_hash($_POST['password'], PASSWORD_DEFAULT)."',
+                    '".$file."',
+                    '".$_POST['contacts']."'
+                    )
+";
+            $connect->query($query);
 
-
-
-
-
-
-        /*
-    $file = $_FILES['avatar']['name'];
-    $path = $_FILES['avatar']['tmp_name'];
-
-    */
+            header("location:login.php");
+        }
     }
 
     $fields_data = [

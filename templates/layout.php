@@ -27,7 +27,7 @@
             if($is_auth == 1):
                 ?>
                 <div class="user-menu__image">
-                    <img src="img/<?= $avatar ?>" width="40" height="40" alt="Пользователь">
+                    <img src="avatars/<?= $avatar ?>" width="40" height="40" alt="Пользователь">
                 </div>
                 <div class="user-menu__logged">
                     <p><?= $user_name ?></p>

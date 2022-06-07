@@ -25,6 +25,7 @@
         <input id="password" type="password" name="password" placeholder="Введите пароль" value="<?=$fields_data['password']?>">
         <span class="form__error"><?=!$password_wrong?'Введите пароль':'Вы ввели неверный пароль'?></span>
       </div>
-      <button type="submit" class="button">Войти</button>
+      <button type="submit" class="button" name="which_form" value="login" >Войти</button>
+        <button type="submit" class="button" name="which_form" value="forgot" >Восстановление пароля</button>
     </form>
 

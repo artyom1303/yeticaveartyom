@@ -21,47 +21,94 @@ $fields_data = array(
 );
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $email_valid = !""==$_POST['email'];
-    $password_valid = !""==$_POST['password'];
 
-    $form_valid = ($email_valid and $password_valid);
+    if($_POST['which_form']=='forgot'){
 
-    $fields_data = array(
-        "email" => $_POST['email'],
-        "password" => $_POST['password'],
-    );
+        $email_valid = !""==$_POST['email'];
 
+        $fields_data = array(
+            "email" => $_POST['email'],
+            "password" => $_POST['password'],
+        );
 
-
-    if($form_valid){
-        $connect = new mysqli("localhost","root","","yeticaveartyom");
-        $query = "
+        if($email_valid){
+            $connect = new mysqli("localhost","root","","yeticaveartyom");
+            $query = "
         SELECT id, name, password, avatar FROM user_ WHERE email = '".$_POST['email']."'
         ";
-        $result = $connect->query($query);
-        if(!$result){
-            die($connect->error." $query");
-        }
-        else{
-            if(mysqli_num_rows($result)==0){
-                $email_wrong = true;
+            $result = $connect->query($query);
+            if(!$result){
+                die($connect->error." $query");
             }
             else{
-                //echo "пользователь с таким почтовым адресом существует"; echo "<br>";
-                $user = $result->fetch_array();
-                if($user['password']==$_POST['password']){
-                    //echo "правильный пароль";
-                    $_SESSION["id"]=$user['id'];
-                    $_SESSION["name"]=$user['name'];
-                    $_SESSION["avatar"]=$user['avatar'];
+                if(mysqli_num_rows($result)==0){
+                    $email_wrong = true;
+                }
+                else{
+                    $code = uniqid();
+                    $url = "http://" . $_SERVER['HTTP_HOST'] . "/forgot.php?code=" . $code;
+                    $message = "Ссылка на восстановление пароля: " . $url;
 
-                    header("location:index.php");
-                }else{
-                    $password_wrong = true;
+                    $_SESSION['pass'] = [$_POST['email'], $code];
+                    mail($_POST['email'], "Восстановление пароля", $url);
+
+                    echo "<script type='text/javascript'>alert('На почту отправлен код восстановления');</script>";
+
                 }
             }
         }
+
+
+
+
+
     }
+    else{
+
+        $email_valid = !""==$_POST['email'];
+        $password_valid = !""==$_POST['password'];
+
+        $form_valid = ($email_valid and $password_valid);
+
+        $fields_data = array(
+            "email" => $_POST['email'],
+            "password" => $_POST['password'],
+        );
+
+
+
+        if($form_valid){
+            $connect = new mysqli("localhost","root","","yeticaveartyom");
+            $query = "
+        SELECT id, name, password, avatar FROM user_ WHERE email = '".$_POST['email']."'
+        ";
+            $result = $connect->query($query);
+            if(!$result){
+                die($connect->error." $query");
+            }
+            else{
+                if(mysqli_num_rows($result)==0){
+                    $email_wrong = true;
+                }
+                else{
+                    //echo "пользователь с таким почтовым адресом существует"; echo "<br>";
+                    $user = $result->fetch_array();
+                    if(   password_verify($_POST['password'], $user['password'])   ){
+                        //echo "правильный пароль";
+                        $_SESSION["id"]=$user['id'];
+                        $_SESSION["name"]=$user['name'];
+                        $_SESSION["avatar"]=$user['avatar'];
+
+                        header("location:index.php");
+                    }else{
+                        $password_wrong = true;
+                    }
+                }
+            }
+        }
+
+    }
+
 }
 
 

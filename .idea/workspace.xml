@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee1ae10a-f430-42be-b3be-7c02e8cbf59d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sign-up.php" beforeDir="false" afterPath="$PROJECT_DIR$/sign-up.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layout.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sign-up.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sign-up.php" afterDir="false" />
-    </list>
+    <list default="true" id="ee1ae10a-f430-42be-b3be-7c02e8cbf59d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,12 +14,13 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="296unMYZ7eEgo8mubXV7e2fkqvB" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -68,6 +64,8 @@
       <workItem from="1654172775159" duration="948000" />
       <workItem from="1654237764805" duration="1866000" />
       <workItem from="1654250217415" duration="8751000" />
+      <workItem from="1654510917154" duration="35000" />
+      <workItem from="1654510953380" duration="7491000" />
     </task>
     <servers />
   </component>
